@@ -1,6 +1,24 @@
-// ./src/lib.rs 
-// fs-path-query
+// ./src/lib.rs
+// querypath
 
-#[path = "code/gis_cs.rs"]
-mod gis_cs;
-pub use gis_cs::{SysA, Sys, GetSys};
+// #[path = "code/querypath.rs "]
+// mod ;
+// pub use ::{};
+
+#[path = "code/paths_entry.rs"]
+pub mod paths_entry;
+
+pub use paths_entry::{AnchoredPath, PathContext, PathNode, PathsEntry, normalize_path};
+
+// #[path = "code/paths_options.rs "]
+// mod ;
+// pub use ::{};
+
+// #[path = "code/paths_patterns.rs "]
+// mod ;
+// pub use ::{};
+
+#[path = "code/fs_walk.rs"]
+pub mod fs_walk;
+
+pub use fs_walk::{FsWalk, FsWalkStat};
