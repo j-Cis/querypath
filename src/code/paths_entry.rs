@@ -57,9 +57,9 @@ impl<'a> PathContext<'a> {
     pub fn from_path(path: &'a str) -> Self {
         let clean_path = path.trim_start_matches("./");
 
-        let (parent, file) = match clean_path.rfind('/') {
-            Some(idx) => (&clean_path[..idx], &clean_path[idx + 1..]),
-            None => ("", clean_path),
+        let (parent, file) = match clean_path.rsplit_once('/') {
+            Some((p, f)) => (p, f),
+            std::option::Option::None => ("", clean_path),
         };
 
         Self { parent, file }
@@ -115,9 +115,9 @@ impl AnchoredPath {
                 if clean_rel.is_empty() {
                     "./".to_string()
                 } else if is_dir {
-                    format!("./{}/", clean_rel)
+                    format!("./{clean_rel}/")
                 } else {
-                    format!("./{}", clean_rel)
+                    format!("./{clean_rel}")
                 }
             }
             Err(_) => {
@@ -178,13 +178,15 @@ impl PathsEntry {
         // 3. Budowanie punktów zakotwiczenia.
         let mut targets = Vec::new();
         for expanded in expanded_paths {
-            if let Ok(anchored) = AnchoredPath::resolve(&expanded, &cwd_node)
-                && !targets
+            #[allow(clippy::collapsible_if)]
+            if let Ok(anchored) = AnchoredPath::resolve(&expanded, &cwd_node) {
+                if !targets
                     .iter()
                     .any(|t: &AnchoredPath| t.target_dir == anchored.target_dir)
                 {
                     targets.push(anchored);
                 }
+            }
         }
 
         if targets.is_empty() {
@@ -204,19 +206,26 @@ impl PathsEntry {
             return vec![input.to_string()];
         };
 
-        let Some(start) = input[..end].rfind('{') else {
+        let Some(sub) = input.get(..end) else {
             return vec![input.to_string()];
         };
 
-        let prefix = &input[..start];
-        let suffix = &input[end + 1..];
-        let options = &input[start + 1..end];
+        let Some(start) = sub.rfind('{') else {
+            return vec![input.to_string()];
+        };
+
+        let (Some(prefix), Some(suffix), Some(options)) = (
+            input.get(..start),
+            input.get(end + 1..),
+            input.get(start + 1..end),
+        ) else {
+            return vec![input.to_string()];
+        };
 
         let mut expanded = Vec::new();
 
-        // Clippy fix: używamy tablicy ['|', ','] zamiast domknięcia
-        for opt in options.split(['|', ',']) {
-            let merged = format!("{}{}{}", prefix, opt, suffix);
+        for opt in options.split('|') {
+            let merged = format!("{prefix}{opt}{suffix}");
             expanded.extend(Self::expand_alternatives(&merged));
         }
 

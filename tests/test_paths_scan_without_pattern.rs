@@ -6,8 +6,16 @@ fn test_scan_single_dir_without_patterns() {
     let entry = PathsEntry::build(["./tests/_/abc/"]).unwrap();
     let walk = FsWalk::scan(&entry).expect("Skanowanie powinno się powiąść.");
 
-    assert_eq!(walk.files.len(), 0, "Katalog ./tests/_/abc/ nie posiada żadnych plików.");
-    assert_eq!(walk.dirs.len(), 2, "Katalog ./tests/_/abc/ posiada dokładnie 2 podkatalogi.");
+    assert_eq!(
+        walk.files.len(),
+        0,
+        "Katalog ./tests/_/abc/ nie posiada żadnych plików."
+    );
+    assert_eq!(
+        walk.dirs.len(),
+        2,
+        "Katalog ./tests/_/abc/ posiada dokładnie 2 podkatalogi."
+    );
 
     let dir_paths: Vec<&str> = walk.dirs.iter().map(|d| d.str.as_str()).collect();
     assert_eq!(dir_paths, vec!["./tests/_/abc/mod/", "./tests/_/abc/src/"]);
@@ -20,8 +28,16 @@ fn test_scan_hidden_structure_without_patterns() {
     let walk = FsWalk::scan(&entry).expect("Skanowanie .gh powinno się powiąść.");
 
     // W Twoim drzewie ./tests/_/.gh/ znajduje się dokładnie 7 plików i 5 podkatalogów
-    assert_eq!(walk.files.len(), 7, "W .gh powinno znajdować się dokładnie 7 plików.");
-    assert_eq!(walk.dirs.len(), 5, "W .gh powinno znajdować się dokładnie 5 katalogów.");
+    assert_eq!(
+        walk.files.len(),
+        7,
+        "W .gh powinno znajdować się dokładnie 7 plików."
+    );
+    assert_eq!(
+        walk.dirs.len(),
+        5,
+        "W .gh powinno znajdować się dokładnie 5 katalogów."
+    );
 
     let file_paths: Vec<&str> = walk.files.iter().map(|f| f.str.as_str()).collect();
 
@@ -43,7 +59,11 @@ fn test_scan_multiple_alternatives_without_patterns() {
 
     let dir_paths: Vec<&str> = walk.dirs.iter().map(|d| d.str.as_str()).collect();
 
-    assert_eq!(dir_paths.len(), 4, "W sumie powinny zostać odnalezione 4 katalogi z abc/ i def/.");
+    assert_eq!(
+        dir_paths.len(),
+        4,
+        "W sumie powinny zostać odnalezione 4 katalogi z abc/ i def/."
+    );
     assert_eq!(
         dir_paths,
         vec![
