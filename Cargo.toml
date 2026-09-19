@@ -1,0 +1,31 @@
+[package]
+name = "querypath"
+version = "0.1.0-dev.1"
+authors = ["Jan Roman Cisowski <code@cisowscy.com>"]
+description = ""
+documentation = ""
+homepage = ""
+repository = "https://github.com/j-Cis/querypath"
+readme = "README.md"
+keywords = ["directory", "recursive", "walk", "iterator"]
+categories = ["filesystem"]
+license = "Unlicense/MIT"
+edition = "2024"
+rust-version = "1.96.0"
+resolver = "3"
+
+[package.metadata.cargo]
+edition = "2024"
+
+[lib]
+name = "querypath"
+path = "src/lib.rs"
+
+[badges]
+travis-ci = { repository = "j-Cis/querypath" }
+appveyor = { repository = "j-Cis/querypath" }
+
+[dependencies]
+anyhow = "1.0.104"
+regex = "1.13.1"
+walkdir = "2.5.0"

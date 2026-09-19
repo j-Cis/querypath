@@ -1,0 +1,11 @@
+[
+    {
+        "key": "ctrl+shift+c",
+        "command": "workbench.action.terminal.newInNewWindow",
+        "when": "(terminalHasBeenCreated || terminalProcessSupported) && !terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+oem_3",
+        "command": "-workbench.action.terminal.newInNewWindow"
+    }
+]

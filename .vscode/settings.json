@@ -1,0 +1,166 @@
+{
+	//"search.exclude": {
+	//	"**": true,
+	//	"src/**": false,
+	//	"example/**": false,
+	//	"ARCHITECTURE.md": false,
+	//	"TODO.md": false,
+	//	"ROADMAP.md": false,
+	//	"README.md": false
+	//},
+	"files.readonlyInclude": {
+		"**/*.lock": true,
+		".git/**": true,
+		".prompt/**": true,
+		"target/**": true,
+		"LICENSE-APACHE": true,
+		"LICENSE-MIT": true
+	},
+	 // Wykluczenie całego folderu z walidacji lintera
+	"files.watcherExclude": {
+		"./.prompt/**/*.log": true,
+		"./.prompt/**/*.md": true,
+		"**/.git/**": true,
+	},
+	"markdownlint.ignore": [
+		".git/**",
+		".prompt/**"
+	],
+	"markdownlint.ignorePatterns": [
+		".git/**/*.md",
+		".prompt/**/*.md"
+	],
+
+	// --- FORMATOWANIE I TABULATORY ---
+	// Wymuszamy tabulatory zamiast spacji (zgodnie z .rustfmt.toml)
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	
+	// --- WIZUALIZACJA STRUKTURY KODU ---
+	
+	// Pionowe linie (Rulers) - ustawiamy na 100 zgodnie z rustfmt
+	"editor.rulers": [
+		100,
+		150,
+		200
+	],
+
+	// Podświetlanie aktywnych wcięć (ułatwia połapanie się w blokach)
+	"editor.guides.bracketPairs": "active",
+	"editor.guides.indentation": true,
+	"editor.guides.highlightActiveIndentation": true,
+
+	// Pokazywanie białych znaków (kropki dla spacji, strzałki dla tabulatorów)
+	// "boundary" pokazuje je tylko tam, gdzie są wcięcia/końce linii
+	"editor.renderWhitespace": "boundary",
+
+	// Renderowanie małej strzałki na końcach linii (ułatwia nawigację)
+	// https://code.visualstudio.com/api/references/icons-in-labels
+	"editor.renderLineHighlight": "all",
+	"actionButtons": {
+		"defaultColor": "none",
+		"loadNpmCommands": false,
+		"reloadButton": null,
+		"commands": [
+			{
+				"name": "$(terminal-new) PS $(terminal-view-icon)",
+				"color": "#00FF00",
+				"useVsCodeApi": true,
+				"command": "workbench.action.terminal.newInNewWindow",
+				"tooltip": "Otwiera nowy terminal w osobnym oknie"
+			},
+			{
+				"name": "$(eye) PS $(terminal-view-icon)",
+				"color": "#FFD700",
+				"useVsCodeApi": true,
+				"command": "workbench.action.terminal.focus",
+				"tooltip": "Przenosi zminimalizowany/otwarty terminal na wierzch"
+			},
+            {
+                "name": "$(layout-panel)",
+                "color": "#B57EDC",
+                "useVsCodeApi": true,
+                "command": "workbench.action.togglePanel",
+                "tooltip": "Pokazuje / ukrywa dolny panel zintegrowany w edytorze"
+            }
+		]
+	},
+	"rust-analyzer.checkOnSave": true,
+	"rust-analyzer.inlayHints.chainingHints.enable": true,
+	"rust-analyzer.inlayHints.closureReturnTypeHints.enable": "always",
+	"rust-analyzer.inlayHints.parameterHints.enable": true,
+	"rust-analyzer.inlayHints.typeHints.enable": true,
+	"rust-analyzer.semanticHighlighting.punctuation.enable": true,
+	"rust-analyzer.showSyntaxTree": true,
+	"rust-analyzer.testExplorer": true,
+	"separators.classes.borderWidth": 0,
+	"separators.constructors.borderWidth": 0,
+	"separators.enabledSymbols": [
+		"Classes",
+		"Constructors",
+		"Enums",
+		"Functions",
+		"Interfaces",
+		"Methods",
+		"Namespaces",
+		"Structs",
+		"Properties",
+	],
+	"separators.enums.borderWidth": 0,
+	"separators.functions.borderStyle": "dashed",
+	"separators.functions.borderWidth": 3,
+	"separators.methods.borderStyle": "dashed",
+	"separators.methods.borderWidth": 3,
+	"separators.functions.ignoreCallbackInline": true,
+	"separators.interfaces.borderWidth": 0,
+	"separators.location": "aboveTheSymbol",
+	"separators.namespaces.borderWidth": 0,
+	"separators.structs.borderWidth": 0,
+	"syntax.debugHover": true,
+	"outline.showFunctions": true,
+	"search.searchView.keywordSuggestions": true,
+	"explorer.sortOrder": "filesFirst",
+	"dependi.rust.informPatchUpdates": true,
+	"editor.fontFamily": "Fira Code",
+	"editor.fontLigatures": true,
+	"editor.inlayHints.enabled": "on",
+	"editor.semanticHighlighting.enabled": true,
+	"editor.semanticTokenColorCustomizations": {
+		"rules": {
+		"block.unsafe": {
+			"foreground": "#ff3300",
+		},
+		"keyword.unsafe": {
+			"fontStyle": "bold",
+			"foreground": "#ff3300",
+		},
+		},
+	},"[md]": {
+		"editor.defaultFormatter": "bierner.markdown-preview-github-styles",
+		"editor.wordWrap": "wordWrapColumn",
+	},
+	"[rs]": {
+		"editor.defaultFormatter": "rust-lang.rust-analyzer",
+		"editor.formatOnSave": true,
+		"separators.enabledSymbols": [
+		"Classes",
+		"Constructors",
+			"Enums",
+			"Functions",
+			"Interfaces",
+			"Methods",
+			"Namespaces",
+			"Structs",
+			"Properties",
+		],
+	},
+	"workbench.colorCustomizations": {
+		"separators.functions.borderColor": "#000000",
+		"separators.methods.borderColor": "#000000",
+		"separators.structs.borderColor": "#000000",
+		"separators.enums.borderColor": "#000000"
+	},
+	"editor.minimap.enabled": true,
+
+}
