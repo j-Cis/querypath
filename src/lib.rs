@@ -13,10 +13,10 @@ pub use fs_walk::{FsWalk, FsWalkStat};
 pub mod paths_patterns;
 pub use paths_patterns::{PattEnvIndex, PattExp, PattRaw, PathsPatterns};
 
-// #[path = "code/querypath.rs "]
-// mod ;
-// pub use ::{};
+#[path = "code/paths_options.rs"]
+pub mod paths_options;
+pub use paths_options::PathsOptions;
 
-// #[path = "code/paths_options.rs "]
+// #[path = "code/querypath.rs "]
 // mod ;
 // pub use ::{};

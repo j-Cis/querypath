@@ -195,7 +195,8 @@ impl PatternCompiled {
             });
         }
 
-        let targets_dir_only: bool = p.ends_with('/') || p.ends_with("/**");
+        // Tylko jawnny slash '/' na końcu oznacza wzorzec wyłącznie dla katalogów
+        let targets_dir_only: bool = p.ends_with('/');
 
         let base_name: String = p
             .trim_end_matches('/')
@@ -218,7 +219,9 @@ impl PatternCompiled {
             anchored = true;
             p = p.get(2..).unwrap_or("");
         } else if p.starts_with("**/") {
-            anchored = true;
+            // Wzorzec **/ oznacza wyszukiwanie od dowolnego poziomu
+            anchored = false;
+            p = p.get(3..).unwrap_or("");
         }
 
         if anchored {
@@ -242,7 +245,8 @@ impl PatternCompiled {
                 '/' => re.push('/'),
                 '*' => {
                     if i + 1 < chars.len() && chars[i + 1] == '*' {
-                        re.push_str(".+");
+                        // ** dopasowuje dowolny ciąg znaków (włącznie z /)
+                        re.push_str(".*");
                         i += 1;
                     } else {
                         re.push_str("[^/]*");
@@ -274,29 +278,26 @@ impl PatternCompiled {
         })
     }
 
+    #[allow(clippy::bool_comparison)]
     pub fn is_match<E: PattEnvIndex>(&self, path: &str, env: &E) -> bool {
         let is_dir: bool = path.ends_with('/');
         let clean: &str = path.strip_prefix("./").unwrap_or(path);
 
-		#[allow(clippy::bool_comparison)]
         if self.targets_dir_only && is_dir == false {
             return false;
         }
 
-		#[allow(clippy::bool_comparison)]
         if self.regex.is_match(clean) == false {
             return false;
         }
 
         // Relacje rodzeństwa/sieroty dla plików
-		#[allow(clippy::bool_comparison)]
         if (self.requires_sibling || self.requires_orphan) && is_dir == false {
             let parent: &str = match clean.rsplit_once('/') {
                 Some((p, _)) => p,
                 std::option::Option::None => "",
             };
 
-            // Budowanie ścieżki krok po kroku bez dwuznacznych makr
             let mut expected_folder = String::new();
             if !parent.is_empty() {
                 expected_folder.push_str(parent);
@@ -307,7 +308,6 @@ impl PatternCompiled {
 
             let exists: bool = env.has_dir(&expected_folder);
 
-			#[allow(clippy::bool_comparison)]
             if self.requires_sibling && exists == false {
                 return false;
             }
@@ -324,7 +324,6 @@ impl PatternCompiled {
 
             let has_file_sibling: bool = env.has_file_with_prefix(&search_prefix);
 
-			#[allow(clippy::bool_comparison)]
             if self.requires_sibling && has_file_sibling == false {
                 return false;
             }

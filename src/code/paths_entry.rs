@@ -151,7 +151,7 @@ pub struct PathsEntry {
 
 impl PathsEntry {
     /// Inicjuje listę celów skanowania na podstawie podanych przez użytkownika stringów.
-    /// Jeśli lista jest pusta, domyślnie używa obecnego katalogu roboczego (`.`).
+    /// Jeśli lista jest pusta lub zawiera puste napisy (`""`), domyślnie używa katalogu roboczego (`./`).
     pub fn build<I, S>(inputs: I) -> Result<Self>
     where
         I: IntoIterator<Item = S>,
@@ -162,10 +162,17 @@ impl PathsEntry {
         let cwd_buf = fs::canonicalize(&raw_cwd).unwrap_or(raw_cwd);
         let cwd_node = PathNode::new(cwd_buf);
 
-        let mut raw_inputs: Vec<String> =
-            inputs.into_iter().map(|s| s.as_ref().to_string()).collect();
+        let mut raw_inputs: Vec<String> = Vec::new();
+        for input in inputs {
+            let s = input.as_ref().trim();
+            if s.is_empty() {
+                raw_inputs.push("./".to_string());
+            } else {
+                raw_inputs.push(s.to_string());
+            }
+        }
 
-        // 2. Jeśli nie podano żadnej ścieżki - domyślnie badamy CWD
+        // 2. Jeśli po przefiltrowaniu lista jest pusta - domyślnie badamy CWD
         if raw_inputs.is_empty() {
             raw_inputs.push("./".to_string());
         }
