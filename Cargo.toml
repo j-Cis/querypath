@@ -1,21 +1,50 @@
 [package]
 name = "querypath"
-version = "0.1.0-dev.1"
+version = "1.0.0"
 authors = ["Jan Roman Cisowski <code@cisowscy.com>"]
-description = ""
-documentation = ""
-homepage = ""
+description = "A fast, modular directory query engine for Rust featuring advanced glob matching, exclusions, path normalization, and rich file metadata."
 repository = "https://github.com/j-Cis/querypath"
 readme = "README.md"
-keywords = ["directory", "recursive", "walk", "iterator"]
-categories = ["filesystem"]
-license = "Unlicense/MIT"
+keywords = [
+    "glob",
+    "filesystem",
+    "pattern",
+    "recursive",
+    "query",
+]
+categories = [
+    "filesystem",
+    "algorithms",
+    "rust-patterns",
+]
+license = "Unlicense OR MIT"
 edition = "2024"
 rust-version = "1.96.0"
 resolver = "3"
 
+include = [
+    "src/**/*",
+    "examples/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE*",
+]
+
 [package.metadata.cargo]
 edition = "2024"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+targets = [
+    "x86_64-pc-windows-msvc",
+    "i686-pc-windows-msvc",
+    "x86_64-unknown-linux-gnu",
+    "x86_64-unknown-linux-musl",
+    "i686-unknown-linux-gnu",
+    "x86_64-apple-darwin",
+    "aarch64-apple-darwin"
+]
 
 [lib]
 name = "querypath"

@@ -1,0 +1,134 @@
+# =========================
+# 🧠 RUST EDITION / CORE
+# =========================
+
+# 01【A01】 Wersja edycji Rust (wpływa na składnię i reguły języka)
+edition = "2024"
+
+# 02【A02】 Włącza niestabilne funkcje rustfmt (eksperymentalne opcje formatowania)
+unstable_features = true
+
+
+# =========================
+# 📏 FORMATOWANIE OGÓLNE (LINIE / UKŁAD)
+# =========================
+
+# 03【B01】 Maksymalna szerokość linii kodu
+max_width = 120
+
+# 04【B02】 Styl końca linii (Auto = zachowuje LF/CRLF)
+newline_style = "Auto"
+
+# 05【B03】 Heurystyka formatowania (Max = minimalne łamanie linii)
+use_small_heuristics = "Max"
+
+# 06【B04】 Styl wcięć (blokowy)
+indent_style = "Block"
+
+# 07【B05】 Używa TABów zamiast spacji
+hard_tabs = true
+
+# 08【B06】 Maksymalna liczba pustych linii
+blank_lines_upper_bound = 1
+
+
+# =========================
+# 🔧 STRUKTURA KODU (BLOCKS / CONTROL FLOW)
+# =========================
+
+# 09【C01】 Preferuje klamry w tej samej linii co nagłówek
+brace_style = "PreferSameLine"
+
+# 10【C02】 Klamry w if/for/while zawsze w tej samej linii
+control_brace_style = "AlwaysSameLine"
+
+# 11【C03】 Where clause może być w jednej linii
+where_single_line = true
+
+# 12【C04】 Funkcje mogą być jednoliniowe
+fn_single_line = true
+
+# 13【C05】 Max długość if/else w jednej linii
+single_line_if_else_max_width = 100
+
+# 14【C06】 Elastyczne formatowanie wyrażeń delimitowanych
+overflow_delimited_expr = true
+
+# 15【C07】 Łączenie wyrażeń kontrolnych w bardziej kompaktową formę
+combine_control_expr = true
+
+
+# =========================
+# 🧩 FUNKCJE / WYWOŁANIA / STRUKTURY
+# =========================
+
+# 16【D01】 Skrócona inicjalizacja structów
+use_field_init_shorthand = true
+
+# 17【D02】 Struct literal w jednej linii jeśli się mieści
+struct_lit_single_line = true
+
+# 18【D03】 Maksymalna szerokość wywołań funkcji
+fn_call_width = 100
+
+# 19【D04】 Maksymalna szerokość tablic
+array_width = 100
+
+# 20【D05】 Maksymalna szerokość atrybutów typu derive
+attr_fn_like_width = 100
+
+
+# =========================
+# 📦 IMPORTY I MODUŁY
+# =========================
+
+# 21【E01】 Automatyczne sortowanie importów
+reorder_imports = true
+
+# 22【E02】 Granularność importów (Crate-level grouping)
+imports_granularity = "Crate"
+
+# 23【E03】 Grupowanie importów: std → external → local
+group_imports = "StdExternalCrate"
+
+# 24【E04】 Styl układu importów (horizontal / vertical fallback)
+imports_layout = "HorizontalVertical"
+
+
+# =========================
+# 🧾 DOKUMENTACJA I KOMENTARZE
+# =========================
+
+# 25【F01】 Formatowanie kodu w doc comments
+format_code_in_doc_comments = true
+
+# 26【F02】 Normalizacja atrybutów dokumentacji
+normalize_doc_attributes = true
+
+# 27【F03】 Automatyczne zawijanie komentarzy - UWAGA TRUE NISZCZY KOMPOZYCJE
+wrap_comments = false
+
+# 28【F04】 Normalizacja stylu komentarzy - UWAGA TRUE NISZCZY KOMPOZYCJE
+normalize_comments = false
+
+
+# =========================
+# 🧠 MACRA / META / ABSTRAKCJE
+# =========================
+
+# 29【G01】 Formatowanie matcherów w macro_rules!
+format_macro_matchers = true
+
+# 30【G02】 Sortowanie elementów w impl
+# reorder_impl_items = true # IRYTUJĄCE
+
+
+# =========================
+# 🧮 LITERALS / STYLE DETALE
+# =========================
+
+# 31【H01】 HEX literały w uppercase
+hex_literal_case = "Upper"
+
+# 32【H02】 Skrócony try operator (? zamiast pełnych form)
+use_try_shorthand = true

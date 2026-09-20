@@ -1,0 +1,24 @@
+TAGI
+
+----------------------------
+$hash = git rev-parse --short HEAD   
+  git tag -a "v0.3.0-beta.5-$hash" -m "Release v0.3.0-beta.5 hash: $hash"                      
+
+git push origin --tags  
+git push origin main --follow-tags
+----------------------------
+# 1. Pobierz krótki hash (w PowerShellu lub Bashu)
+$hash = git rev-parse --short HEAD
+
+# 2. Stwórz oficjalny, adnotowany certyfikat wersji
+git tag -a "v0.3.0-beta.3-$hash" -m "Release v0.3.0-beta.3 hash: $hash"
+
+# 3. Wypchnij main wraz z nowym, precyzyjnym tagiem
+git push origin main --follow-tags
+----------------------------
+git tag -n
+git tag -n5
+git tag --sort=creatordate
+git tag --sort=-creatordate
+
+git log --oneline --graph --all --decorate
