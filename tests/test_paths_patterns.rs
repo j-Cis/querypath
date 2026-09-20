@@ -1,5 +1,5 @@
+use querypath::{FsWalk, PathsEntry, PathsPatterns, PattEnvIndex};
 use std::collections::HashSet;
-use querypath::{FsWalk, PattEnvIndex, PathsEntry, PathsPatterns};
 
 /// Adapter mapujący rzeczywisty skan dysku (`FsWalk`) na indeks pamięciowy `PattEnvIndex` (Zero-I/O).
 struct WalkEnvIndex<'a> {

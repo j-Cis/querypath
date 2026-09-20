@@ -11,7 +11,7 @@ pub use fs_walk::{FsWalk, FsWalkStat};
 
 #[path = "code/paths_patterns.rs"]
 pub mod paths_patterns;
-pub use paths_patterns::{PattEnvIndex, PattExp, PattRaw, PathsPatterns};
+pub use paths_patterns::{PathsPatterns, PattEnvIndex, PattExp, PattRaw};
 
 #[path = "code/paths_options.rs"]
 pub mod paths_options;

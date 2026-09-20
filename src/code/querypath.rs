@@ -2,12 +2,12 @@ use anyhow::Result;
 use std::collections::{HashMap, HashSet};
 use std::fs;
 use std::io::Read;
-use std::time::UNIX_EPOCH;
+use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
 use crate::fs_walk::FsWalk;
 use crate::paths_entry::PathsEntry;
 use crate::paths_options::PathsOptions;
-use crate::paths_patterns::{PattEnvIndex, PathsPatterns};
+use crate::paths_patterns::{PathsPatterns, PattEnvIndex};
 
 // ============================================================================
 // STRUKTURY WYNIKOWE (DOMENA METADANYCH)
@@ -41,6 +41,9 @@ pub struct QueryResults {
     pub patterns: Vec<String>,
     pub scanned_files: usize,
     pub scanned_dirs: usize,
+    pub started_at_ms: u64,
+    pub finished_at_ms: u64,
+    pub duration_ms: u64,
     pub files: Vec<FileItem>,
     pub dirs: Vec<DirItem>,
 }
@@ -95,7 +98,7 @@ fn check_is_binary(path_str: &str) -> bool {
     let Ok(n) = file.read(&mut buffer) else {
         return false;
     };
-    buffer[..n].contains(&0)
+    buffer.iter().take(n).any(|&byte| byte == 0)
 }
 
 /// Odczyt czasu modyfikacji z metadanych w formacie UNIX timestamp.
@@ -165,6 +168,12 @@ impl QueryPath {
     }
 
     pub fn run(&self) -> Result<QueryResults> {
+        let start_instant = Instant::now();
+        let started_at_ms = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_millis() as u64;
+
         let entry = PathsEntry::build(&self.paths)?;
         let walk = FsWalk::scan(&entry)?;
         let env = WalkEnvIndex::from_walk(&walk);
@@ -254,12 +263,26 @@ impl QueryPath {
 
         matched_dir_items.sort_by(|a, b| a.path.cmp(&b.path));
 
+        let finished_at_ms = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_millis() as u64;
+
+        let duration_ms = start_instant.elapsed().as_millis() as u64;
+
         Ok(QueryResults {
             execution_dir: entry.execution_dir.str,
-            scanned_paths: entry.targets.iter().map(|t| t.relative_path.clone()).collect(),
+            scanned_paths: entry
+                .targets
+                .iter()
+                .map(|t| t.relative_path.clone())
+                .collect(),
             patterns: self.patterns.clone(),
             scanned_files: walk.files.len(),
             scanned_dirs: walk.dirs.len(),
+            started_at_ms,
+            finished_at_ms,
+            duration_ms,
             files: matched_files,
             dirs: matched_dir_items,
         })

@@ -109,11 +109,7 @@ impl PathsPatterns {
             }
         }
 
-        if has_positive {
-            matched_positive
-        } else {
-            true
-        }
+        if has_positive { matched_positive } else { true }
     }
 
     #[must_use]
