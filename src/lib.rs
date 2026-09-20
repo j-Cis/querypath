@@ -17,6 +17,6 @@ pub use paths_patterns::{PattEnvIndex, PattExp, PattRaw, PathsPatterns};
 pub mod paths_options;
 pub use paths_options::PathsOptions;
 
-// #[path = "code/querypath.rs "]
-// mod ;
-// pub use ::{};
+#[path = "code/querypath.rs"]
+pub mod querypath;
+pub use querypath::{DirItem, FileItem, QueryPath, QueryResults};
