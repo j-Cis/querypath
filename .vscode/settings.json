@@ -162,5 +162,6 @@
 		"separators.enums.borderColor": "#000000"
 	},
 	"editor.minimap.enabled": true,
+	"json.maxItemsComputed": 50000,
 
 }
